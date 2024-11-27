@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список задач</title>
+</head>
+<body>
+    <h1>Список задач</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task.title }} - {{ task.status }} - {{ task.deadline|date:"Y-m-d H:i:s" }}
+                <a href="{% url 'api:task-detail' task.id %}">Изменить</a>
+                <form action="{% url 'api:task-delete' task.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'api:task-list' %}">Добавить задачу</a>
+</body>
+</html>
